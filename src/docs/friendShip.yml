@@ -1,0 +1,208 @@
+paths:
+  /api/v1/friends:
+    get:
+      summary: get all friends 
+      tags:
+        - FriendShip
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The number of items to collect the result set
+        - in: query
+          name: userId
+          schema:
+            type: integer
+          description: The userId
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object
+   
+  /api/v1/friends/requested-friends:
+    get:
+      summary: get all requested friends 
+      tags:
+        - FriendShip
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The number of items to collect the result set
+
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object
+  /api/v1/friends/suggested-friends:
+    get:
+      summary: get all requested friends 
+      tags:
+        - FriendShip
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The number of items to collect the result set
+
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object
+  /api/v1/friends/accept-friend:
+    post:
+      summary: Set accept friends 
+      tags:
+        - FriendShip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requesterId:
+                  type: number
+
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object     
+  
+  /api/v1/friends/add-friend:
+     post:
+      summary: Add friend
+      tags:
+        - FriendShip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addresseId:
+                  type: number
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object
+
+  /api/v1/friends/{id}:
+    put:
+      summary: Update an friend
+      tags:
+        - FriendShip
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: friend id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                content:
+                  type: string
+                avatar:
+                  type: number
+                isDeleted:
+                  type: boolean
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object
+
+    delete:
+      summary: delete  friend
+      tags:
+        - FriendShip
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: friend id
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object
