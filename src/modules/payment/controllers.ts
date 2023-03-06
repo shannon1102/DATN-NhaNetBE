@@ -40,31 +40,38 @@ const createPayment = async (req: Request, res: Response) => {
           // price:'price_1MfoxxAbg9lH9IyvhkeZboNK',
           price_data: {
             currency: 'usd',
-            unit_amount: 2000,
+            unit_amount: +price,
             product_data: {
-              name: 'T-shirt',
+              name: productId,
               description: 'Comfortable cotton t-shirt',
-              images: [`${process.env.MEDIA_URL}/2`],
+              images: [`${process.env.MEDIA_URL}/${productId}`],
+              metadata: {
+                customerEmail: customerEmail, 
+                customerPhone: customerPhone,
+                customerAddress: customerAddress,
+                paymentMethod: paymentMethod,
+                status: status
+              }
             },
           },
           quantity: 1,
 
         }
       ],
-      custom_fields: [
-        {
-          key: 'customerName',
-          label: { type: 'custom', custom: 'Customer name' },
-          type: 'text',
-        },
-        {
-          key: 'customerAddress',
-          label: { type: 'custom', custom: 'Customer address' },
-          type: 'text',
-        },
+      // custom_fields: [
+      //   {
+      //     key: 'customerName',
+      //     label: { type: 'custom', custom: 'Customer name' },
+      //     type: 'text',
+      //   },
+      //   {
+      //     key: 'customerAddress',
+      //     label: { type: 'custom', custom: 'Customer address' },
+      //     type: 'text',
+      //   },
        
-      ]
-      ,
+      // ]
+      // ,
 
       success_url: `${process.env.CLIENT_URL}/checkout`,
       cancel_url: `${process.env.CLIENT_URL}/product/${productId}`,

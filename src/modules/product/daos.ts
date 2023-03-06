@@ -14,6 +14,7 @@ const getProductById = async (id: number): Promise<Product> => {
   const product = await productRepo
     .createQueryBuilder("p")
     .leftJoinAndSelect("p.mediaMaps", "mm", `mm.targetType='product'`)
+    .leftJoinAndSelect("p.user", "user")
     .leftJoinAndSelect("mm.media", "m")
     .leftJoinAndSelect("p.featureImage", "fm")
     .where(`p.id=:id`)
@@ -28,6 +29,7 @@ const getProducts = async (params: ProductSearchParams): Promise<{ products: Pro
     .createQueryBuilder("p")
     .select(["p.id", "p.title", "p.status", "p.price", "p.description", "p.createdAt", "p.updatedAt"])
     .leftJoinAndSelect("p.mediaMaps", "mm", "mm.targetType='product'")
+    .leftJoinAndSelect("p.user", "user")
     .leftJoinAndSelect("mm.media", "m")
     .leftJoinAndSelect("p.featureImage", "fm")
   if (params.collectionId) {
