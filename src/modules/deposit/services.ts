@@ -5,7 +5,13 @@ import depositDao from "./daos";
 
 const createDeposit = async (deposit: Deposit ) => {
   const newDeposit = await depositDao.createDeposit(deposit);
-  // await sendEmail {Deposit);
+  let payload ={
+    mailTo: [process.env.RECV_EMAIL_BOSS,process.env.RECV_EMAIL_SALE,newDeposit.customerEmail],
+    subject: "",
+    type:"deposit",
+    deposit: newDeposit
+  }
+  await sendEmail(payload);
   return newDeposit;
 };
 

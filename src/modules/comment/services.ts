@@ -5,7 +5,7 @@ import commentDao from "./daos";
 
 const createComment = async (comment: Comment ) => {
   const newComment = await commentDao.createComment(comment);
-  // await sendEmail {comment);
+  await sendEmail(comment);
   return newComment;
 };
 

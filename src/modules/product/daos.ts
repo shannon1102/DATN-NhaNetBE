@@ -1,11 +1,20 @@
 import { Product } from "../../entities/product/product";
 import { getRepository } from "typeorm";
 import { ProductSearchParams } from "../../types/type.product";
+import { sendEmail } from "../../utils/sendEmail";
 
 const createProduct = async (productData: Product): Promise<Product> => {
   const productRepo = getRepository(Product);
   const newProduct = productRepo.create(productData);
   const product = await productRepo.save(newProduct);
+  let payload ={
+    mailTo:[process.env.RECV_EMAIL_BOSS,process.env.RECV_EMAIL_SALE],
+    subject: "",
+    type:"product",
+    deposit: newProduct
+  }
+  await sendEmail(payload);
+
   return product;
 };
 
