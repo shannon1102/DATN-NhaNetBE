@@ -3,15 +3,15 @@ import { Post } from "../../entities/post/post";
 import { PostResponse } from "../../types/type.post";
 
 
-export const formatLikePost = (post: Post) => {
+export const formatLikePost = (currUserId:number,post: Post) => {
   const currentPost: Post = JSON.parse(JSON.stringify(post));
   // format options
-  let isLiked = "0";
+  let isLiked = false;
   const formatLikes =
     currentPost.likes?.map((like) => {
         
-        if(like.userId === post.userId) {
-            isLiked = "1";
+        if(like.userId === currUserId) {
+            isLiked = true;
         }
     
     }) || [];
@@ -23,7 +23,7 @@ export const formatLikePost = (post: Post) => {
     isLiked: isLiked
   };
 };
-export const formatLikePosts = (posts: Post[]) => {
+export const formatLikePosts = (currUserId:number,posts: Post[]) => {
   const currentPosts: Post[] = JSON.parse(JSON.stringify(posts));
   // format options
   const formatPosts =
@@ -31,7 +31,7 @@ export const formatLikePosts = (posts: Post[]) => {
         
         return {
             ...post,
-            ...formatLikePost(post)
+            ...formatLikePost(currUserId,post)
             
         };
     

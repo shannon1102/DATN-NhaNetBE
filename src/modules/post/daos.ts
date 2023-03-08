@@ -34,16 +34,12 @@ const getPostById = async (id: number) => {
     .where(`p.id = ${id} and p.isDeleted = false`)
     .getOne();
 
-    let {isLiked,like } = formatLikePost(post);
     // delete post.likes
 
-  return {...post,
-    isLiked,
-    like
-  };
+  return post;
 };
 
-const getPostsByUserId = async (condition: { userId: number; exceptPostId?: number; limit?: number; offset?: number }) => {
+const getPostsByUserId = async (currUserId:number ,condition: { userId: number; exceptPostId?: number; limit?: number; offset?: number }) => {
   const postRepository = getRepository(Post);
   let whereConditionGetPost = `a.userId = ${condition.userId} and a.isDeleted = false`;
   if (condition.exceptPostId) {
@@ -62,7 +58,7 @@ const getPostsByUserId = async (condition: { userId: number; exceptPostId?: numb
     .getMany();
   const total = await postRepository.createQueryBuilder("a").where("a.userId = :userId and a.isDeleted = false", { userId: condition.userId }).getCount();
   return {
-    posts: posts,
+    posts:  formatLikePosts(currUserId,posts),
     total,
   };
 };
@@ -91,7 +87,7 @@ const getPostsByUserIdFilterByTag = async (condition: { userId: number; limit?: 
   return data;
 };
 
-const getAllPosts = async (params: Pagination) => {
+const getAllPosts = async (currUserId: number,params: Pagination) => {
   const postRepository = getRepository(Post);
   const posts = await postRepository
     .createQueryBuilder("a")
@@ -109,7 +105,7 @@ const getAllPosts = async (params: Pagination) => {
     .getMany();
   const total = await postRepository.createQueryBuilder("a").where("a.isDeleted = false").getCount();
   return {
-    posts: formatLikePosts(posts),
+    posts: formatLikePosts(currUserId,posts),
     total,
   };
 };

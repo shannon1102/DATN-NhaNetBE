@@ -31,8 +31,8 @@ const createPost = async (post: PostCreateParamsType) => {
   return postRes;
 };
 
-const getPostsByUserId = async (userId: number, pagination: Pagination) => {
-  const result = await postDao.getPostsByUserId({ userId, ...pagination });
+const getPostsByUserId = async (currUserId:number ,userId: number, pagination: Pagination) => {
+  const result = await postDao.getPostsByUserId(currUserId,{ userId, ...pagination });
   return result;
 };
 
@@ -41,14 +41,14 @@ const getPostById = async (id: number) => {
   if (!post) {
     throw new CustomError(codes.NOT_FOUND, "Post not found!");
   }
-  const relativePosts = await postDao.getPostsByUserId({
-    userId: post.userId,
-    exceptPostId: post.id,
-    limit: 8,
-  });
+  // const relativePosts = await postDao.getPostsByUserId({
+  //   userId: post.userId,
+  //   exceptPostId: post.id,
+  //   limit: 8,
+  // });
   return {
     post,
-    relativePosts,
+    // relativePosts,
   };
 };
 
@@ -101,8 +101,8 @@ const deletePost = async (postId: number) =>{
 
   return await postDao.deletePost(postId);
 }
-const getAllPosts = async (params: Pagination) => {
-  return await postDao.getAllPosts(params);
+const getAllPosts = async (currUserId: number,params: Pagination) => {
+  return await postDao.getAllPosts(currUserId,params);
 };
 
 export default { createPost, getPostsByUserId, getPostById, updatePostById, getAllPosts, deletePost };

@@ -19,22 +19,22 @@ const createPost = async (req: Request, res: Response) => {
   });
 };
 
-const getPosts = async (req: Request, res: Response) => {
-  const { limit, offset, userId } = req.query;
-  const currentUserId: number = req.user?.id;
-  if (!currentUserId) {
-    throw new CustomError(codes.NOT_FOUND);
-  }
-  const data = await postService.getPostsByUserId(currentUserId, {
-    limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
-    offset: Number(offset) || 0,
-  });
-  res.status(200).json({
-    status: "success",
-    result: data.posts,
-    total: data.total,
-  });
-};
+// const getPosts = async (req: Request, res: Response) => {
+//   const { limit, offset, userId } = req.query;
+//   const currentUserId: number = req.user?.id;
+//   if (!currentUserId) {
+//     throw new CustomError(codes.NOT_FOUND);
+//   }
+//   const data = await postService.getPostsByUserId(currentUserId, {
+//     limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
+//     offset: Number(offset) || 0,
+//   });
+//   res.status(200).json({
+//     status: "success",
+//     result: data.posts,
+//     total: data.total,
+//   });
+// };
 
 const getPostById = async (req: Request, res: Response) => {
   const id: number = Number(req.params.id);
@@ -71,15 +71,16 @@ const updatePostById = async (req: Request, res: Response) => {
 
 const getAllPosts = async (req: Request, res: Response) => {
   const { limit, offset, userId } = req.query;
+  const currUserId = req.user.id;
   let data;
   if(userId) {
-    data = await postService.getPostsByUserId(+userId,{
+    data = await postService.getPostsByUserId(+userId,+currUserId,{
       limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
       offset: Number(offset) || 0,
     });
 
   } else{
-     data = await postService.getAllPosts({
+     data = await postService.getAllPosts(currUserId,{
       limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
       offset: Number(offset) || 0,
     });
@@ -103,4 +104,4 @@ const deletePost = async (req: Request, res: Response) => {
   });
 }
 
-export default { createPost, getPosts, getPostById, updatePostById, getAllPosts, deletePost };
+export default { createPost, getPostById, updatePostById, getAllPosts, deletePost };
