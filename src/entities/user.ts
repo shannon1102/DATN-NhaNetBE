@@ -31,6 +31,9 @@ export class User {
   
   @Column()
   age?:number;
+  
+  @Column()
+  address?: string;
 
   @Column({ type: "enum", default: "user" })
   role?: "admin" | "user";

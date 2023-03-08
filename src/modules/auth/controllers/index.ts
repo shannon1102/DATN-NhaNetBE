@@ -50,6 +50,7 @@ const me = async (req: Request, res: Response) => {
 };
 const getUserInfo = async (req: Request, res: Response) => {
   const userId = +req.params.userId;
+  const reqUser = req.user;
   console.log("USERID",userId)
 
   let user = await authService.getUserInfo(userId);
@@ -93,7 +94,7 @@ const updatePassword = async (req: Request, res: Response) => {
 };
 
 const updateInfo = async (req: Request, res: Response) => {
-  const { name, avatar, phone ,sex,age } = req.body;
+  const { name, avatar, phone ,sex,age,address } = req.body;
   const user = req.user;
   let newInfo: User;
   if (name) {
@@ -116,6 +117,10 @@ const updateInfo = async (req: Request, res: Response) => {
   if (age) {
     newInfo = newInfo || {};
     newInfo.age = age;
+  }
+  if (address) {
+    newInfo = newInfo || {};
+    newInfo.address = address;
   }
   if (!newInfo) {
     throw new CustomError(codes.BAD_REQUEST, "No update information about user!");
