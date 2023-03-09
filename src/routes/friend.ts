@@ -9,6 +9,7 @@ router.get("/friends/suggested-friends", asyncMiddleware(friendController.getAll
 router.get("/friends/requested-friends", asyncMiddleware(friendController.getAllRequestFriends));
 router.post("/friends/add-friend", asyncMiddleware(friendController.addFriend));
 router.post("/friends/accept-friend", asyncMiddleware(friendController.acceptFriend));
+router.post("/friends/update-friend-status", asyncMiddleware(friendController.updateFriendStatus));
 router.post("/friends/decline-request-friend", asyncMiddleware(friendController.declineFriend));
 router.get("/friends/", asyncMiddleware(friendController.getAllFriends));
 router.put("/friends/:id", asyncMiddleware(friendController.getFriendById));

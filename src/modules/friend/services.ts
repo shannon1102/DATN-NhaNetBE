@@ -48,13 +48,15 @@ const deleteFriendByFriendId = async (friendId: number, userId: number) => {
   return await friendDao.deleteFriendByFriendId(friendId, userId);
 
 };
-
+const updateFriendStatus = async (currUserId: number, userId: number,statusCode: number) =>{
+  return await friendDao.updateFriendStatus(currUserId,userId,statusCode);
+}
 
 
 const getAllFriends = async (params: Pagination, userId: number) => {
   let resp = await friendDao.getAllFriends(params, userId);
 
-  const formatResponse =  handleFriendResponse(resp[0],userId);
+  const formatResponse =  await handleFriendResponse(resp[0],userId);
   return [formatResponse,resp[1]];
 };
 
@@ -62,13 +64,21 @@ const getAllFriends = async (params: Pagination, userId: number) => {
 const getAllSuggestFriends = async (params: Pagination, userId: number) => {
   return await friendDao.getAllSuggestFriends(params, userId);
 };
-const handleFriendResponse = (friendShipList : Friend[],currentUserId: number) => {
+const handleFriendResponse = async (friendShipList : Friend[],currentUserId: number) => {
   let arr =friendShipList.map( e => {
     return [e.addressee,e.requester]
   }).flat(1);
   let friends = arr.filter( e=> e.id != currentUserId)
   console.log("friendShipList",arr,friends);
-  return friends;
+      let usersWithSameFriend = await Promise.all(friends.map(async (e) => {
+      const sameFriend = await friendDao.getSameFriend(currentUserId, e.id);
+      return {
+        ...e,
+        sameFriend: sameFriend
+      }
+    }));
+  console.log("SAmeeeeee",usersWithSameFriend)
+  return usersWithSameFriend;
 }
 
-export default { getAllRequestFriends, getAllSuggestFriends, declineRequestFriend, createFriend, addFriend, acceptFriend, getFriendById, getAllFriends, deleteFriendById };
+export default { updateFriendStatus, getAllRequestFriends, getAllSuggestFriends, declineRequestFriend, createFriend, addFriend, acceptFriend, getFriendById, getAllFriends, deleteFriendById };

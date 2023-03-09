@@ -80,6 +80,18 @@ const deleteFriend = async (req: Request, res: Response) => {
     result: data,
   });
 };
+
+const updateFriendStatus = async (req: Request, res: Response) => {
+
+  const {statusCode,userId} = req.body;
+  const currUserId: number = req.user.id;
+
+  const data = await friendService.updateFriendStatus(currUserId,userId,statusCode);
+  res.status(200).json({
+    status: "success",
+    result: data,
+  });
+};
 const addFriend = async (req: Request, res: Response) => {
   const userId = req.user.id;
   const addresseeId: number = Number(req.body.addresseeId);
@@ -111,4 +123,4 @@ const declineFriend = async (req: Request, res: Response) => {
   });
 };
 
-export default { addFriend, acceptFriend, declineFriend, getAllSuggestFriends, getAllRequestFriends, getFriendById, getAllFriends, deleteFriend };
+export default { addFriend,updateFriendStatus, acceptFriend, declineFriend, getAllSuggestFriends, getAllRequestFriends, getFriendById, getAllFriends, deleteFriend };

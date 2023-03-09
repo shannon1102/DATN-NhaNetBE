@@ -143,6 +143,33 @@ paths:
                     type: string
                   result:
                     type: object
+  /api/v1/friends/update-friend-status:
+    post:
+      summary: Update friend status
+      tags:
+        - FriendShip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: number
+                statusCode:
+                  type: number
+      responses:
+        "200": # status code
+          description: Json format of srt file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  result:
+                    type: object
 
   /api/v1/friends/{id}:
     put:
