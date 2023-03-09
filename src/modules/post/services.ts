@@ -7,7 +7,7 @@ import { Pagination } from "../../types/type.pagination";
 import { PostCreateParamsType, PostUpdateParamsType } from "../../types/type.post";
 import mediaMapServices from "../mediaMap/services";
 import postDao from "./daos";
-
+import { sendEmail } from "../../utils/sendEmail";
 const createPost = async (post: PostCreateParamsType) => {
 
   let media = post.media;
@@ -28,6 +28,7 @@ const createPost = async (post: PostCreateParamsType) => {
   }
 
   const postRes = await postDao.getPostById(newPost.id);
+  
   return postRes;
 };
 

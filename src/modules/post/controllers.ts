@@ -4,6 +4,8 @@ import ROLES from "../../constants/roles";
 import codes from "../../errors/codes";
 import CustomError from "../../errors/customError";
 import postService from "./services";
+import friendService from "../friend/services";
+import { sendEmail } from "../../utils/sendEmail";
 
 const createPost = async (req: Request, res: Response) => {
   const { description, media } = req.body;
@@ -12,9 +14,26 @@ const createPost = async (req: Request, res: Response) => {
   console.log("reqCURRENTUSER",req.user)
   //creat media here
   const post = await postService.createPost({ description, userId: currentUserId, media });
+  //Send Email to all friend
+  let friends = await friendService.getAllFriends({
+    limit: configs.MAX_RECORDS_PER_REQ,
+    offset: 0,
+  },currentUserId);
+  console.log("Frienddd",friends)
+
+  // let friendMail = friends[0]?.map( f=>f.email)
+  // let payload ={
+  //   mailTo: friendMail,
+  //   subject: "",
+  //   type:"post",
+  //   deposit: post
+  // }
+  // sendEmail()
+
   delete post.userId;
   res.status(200).json({
     status: "success",
+    friend:friends,
     result: post,
   });
 };

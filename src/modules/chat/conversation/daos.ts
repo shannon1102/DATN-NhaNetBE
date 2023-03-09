@@ -5,6 +5,20 @@ import configs from "../../../configs";
 
 const createConversation = async (data: Conversation) => {
   const conversationRepository = getRepository(Conversation);
+  const foundConversation =  await conversationRepository.findOne(
+    {
+      where: [{
+        firstUserId: data.firstUserId,
+        secondUserId: data.secondUserId
+      }, {
+        firstUserId: data.secondUserId,
+        secondUserId: data.firstUserId
+      }]
+    }
+  );
+  if (foundConversation) {
+    return foundConversation;
+  }
   const conversationData = {
     ...data,
     createdAt: new Date(),

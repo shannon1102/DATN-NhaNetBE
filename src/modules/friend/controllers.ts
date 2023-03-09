@@ -5,7 +5,8 @@ import { Friend } from "../../entities/friend";
 import codes from "../../errors/codes";
 import CustomError from "../../errors/customError";
 import friendService from "./services";
-
+import conversationService  from "../chat/conversation/services"
+import { Conversation } from "../../entities/chat/conversation";
 
 
 const getAllRequestFriends = async (req: Request, res: Response) => {
@@ -97,6 +98,7 @@ const addFriend = async (req: Request, res: Response) => {
   const addresseeId: number = Number(req.body.addresseeId);
   console.log("UserId,addressId", userId, addresseeId);
   const data = await friendService.addFriend(+userId, addresseeId);
+  
   res.status(200).json({
     status: "success",
     result: data,
@@ -107,6 +109,10 @@ const acceptFriend = async (req: Request, res: Response) => {
   const addresseeId = req.user.id;
   console.log("requestUserIdrequestUserIdrequestUserId", requestUserId.addresseeId)
   const data = await friendService.acceptFriend(+requestUserId, addresseeId);
+  const newConversation = new Conversation();
+  newConversation.firstUserId = +requestUserId;
+  newConversation.secondUserId = addresseeId;
+  const newConversationResp = await conversationService.createConversation(newConversation);
   res.status(200).json({
     status: "success",
     result: data,
