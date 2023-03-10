@@ -39,7 +39,7 @@ const createDeposit = async (req: Request, res: Response) => {
 };
 
 const getDepositById = async (req: Request, res: Response) => {
-  const id: number = Number(req.params.DepositId);
+  const id: number = Number(req.params.depositId);
   const currentUserId = req.user;
   if (currentUserId.role !== "admin") {
     throw new CustomError(codes.FORBIDDEN);
@@ -50,13 +50,30 @@ const getDepositById = async (req: Request, res: Response) => {
     result: response,
   });
 };
-
-const getAllDeposits = async (req: Request, res: Response) => {
+const getUserDeposits = async (req: Request, res: Response) => {
   const { limit, offset } = req.query;
-  const Deposits = await depositService.getAllDeposits({
-    limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
-    offset: Number(offset) || 0,
-  });
+  const currUserId = req.user.id
+  
+  const deposits = await depositService.getUserDeposits(currUserId, {
+        limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
+        offset: Number(offset) || 0,
+      });
+      return res.status(200).json({
+        status: "success",
+        result: deposits[0],
+        total: deposits[1],
+      });
+
+  } 
+const getAllDeposits = async (req: Request, res: Response) => {
+  const { limit, offset,userId } = req.query;
+  const currUserId = req.user.id
+
+    const Deposits = await depositService.getAllDeposits({
+      limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
+      offset: Number(offset) || 0,
+    });
+  
 
   return res.status(200).json({
     status: "success",
@@ -75,4 +92,4 @@ const deleteDeposit = async (req: Request, res: Response) => {
   });
 };
 
-export default { createDeposit, getDepositById, getAllDeposits, deleteDeposit };
+export default { getUserDeposits, createDeposit, getDepositById, getAllDeposits, deleteDeposit };

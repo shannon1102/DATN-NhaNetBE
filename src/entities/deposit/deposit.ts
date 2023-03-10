@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany } from "typeorm";
 import "reflect-metadata";
+import { Product } from "../product/product";
 @Entity()
 export class Deposit {
   @PrimaryGeneratedColumn()
@@ -34,8 +35,8 @@ export class Deposit {
   // @JoinColumn({ name: "userId", referencedColumnName: "id" })
   // user?: User;
 
-  // @ManyToOne(() => Product, (product) => product.)
-  // @JoinColumn({ name: "productId", referencedColumnName: "id" })
-  // product?: Product;
+  @OneToOne(() => Product)
+  @JoinColumn({ name: "productId", referencedColumnName: "id" })
+  product?: Product;
 
 }

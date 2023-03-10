@@ -29,7 +29,10 @@ const deleteDepositById = async (id: number) => {
 };
 
 
+const getUserDeposits = async (userId:number, pagination:Pagination) => {
 
+  return await depositDao.getUserDeposits(userId,pagination);
+}
 const getAllDeposits = async (params: Pagination) => {
   return await depositDao.getAllDeposits(params);
 };
@@ -38,4 +41,4 @@ const getAllDepositsByuserId = async (params: Pagination,userId:number) => {
   return await depositDao.getDepositsByUserId(params,userId);
 };
 
-export default { getAllDepositsByuserId, createDeposit,getDepositById,getAllDeposits ,deleteDepositById};
+export default { getUserDeposits, getAllDepositsByuserId, createDeposit,getDepositById,getAllDeposits ,deleteDepositById};

@@ -36,13 +36,27 @@ const getAllDeposits = async (params: Pagination) => {
   const depositRepository = getRepository(Deposit);
   const Deposits = await depositRepository
     .createQueryBuilder("d")
+    .leftJoinAndSelect("d.product","p","p.id = d.productId")
     .orderBy("d.createdAt", "DESC")
     .skip(params.offset)
     .take(params.limit || configs.MAX_RECORDS_PER_REQ)
     .getManyAndCount();
   return Deposits;
 };
+const getUserDeposits = async(userId: number, params: Pagination) =>{
+  const depositRepository = getRepository(Deposit);
+  const deposits = await depositRepository
+    .createQueryBuilder("d")
+    .where(`d.userId = ${userId}`)
+    .leftJoinAndSelect("d.product","p","p.id = d.productId")
+    .leftJoinAndSelect("p.user","u","u.id = p.userId")
+    .orderBy("d.createdAt", "DESC")
+    .skip(params.offset)
+    .take(params.limit || configs.MAX_RECORDS_PER_REQ)
+    .getManyAndCount();
+  return deposits;
 
+}
 const getDepositsByPostId = async (params: Pagination, productId: number) => {
   const depositRepository = getRepository(Deposit);
   const Deposits = await depositRepository
@@ -71,5 +85,6 @@ export default {
   getAllDeposits,
   deleteDepositById,
   getDepositsByPostId,
-  getDepositsByUserId
+  getDepositsByUserId,
+  getUserDeposits
 };

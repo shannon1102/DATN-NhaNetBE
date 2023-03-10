@@ -6,9 +6,9 @@ import ROLES from "../constants/roles";
 const router = express.Router();
 
 router.post("/deposits", asyncMiddleware(depositController.createDeposit));
+router.get("/deposits/me",asyncMiddleware(depositController.getUserDeposits))
 // router.put("/deposits/:id", asyncMiddleware(depositController.getDepositById));
 router.get("/deposits", asyncMiddleware(depositController.getAllDeposits));
 router.get("/deposits/:id", asyncMiddleware(depositController.getDepositById));
 router.delete("/deposits/:id", asyncMiddleware(depositController.deleteDeposit));
-
 export default router;

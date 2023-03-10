@@ -141,7 +141,7 @@ paths:
                     type: string
                   result:
                     type: object
-  /api/v1/user/deposits:
+  /api/v1/deposits/me:
     get:
       summary: get list order
       tags:
