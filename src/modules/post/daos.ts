@@ -124,6 +124,17 @@ const deletePost = async (postId: number) => {
   // const post: Post = await getPostById(postId);
 
 }
+
+const getCountPosts = async () => {
+  const postRepository = getRepository(Post);
+  const posts = await postRepository
+    .createQueryBuilder("a")
+    .where("a.isDeleted = false")
+    .orderBy("a.createdAt", "DESC")
+
+    .getCount();
+    return posts;
+};
 export default {
   createPost,
   getPostById,
@@ -131,5 +142,6 @@ export default {
   updatePost,
   getPostsByUserIdFilterByTag,
   getAllPosts,
-  deletePost
+  deletePost,
+  getCountPosts
 };

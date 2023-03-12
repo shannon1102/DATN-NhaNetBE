@@ -12,5 +12,6 @@ router.get("/profile/:userId", asyncMiddleware(auth.getUserInfo));
 router.put("/me/password", asyncMiddleware(auth.updatePassword));
 router.put("/me", asyncMiddleware(auth.updateInfo));
 router.get("/users", asyncMiddleware(auth.getAllUsers));
+router.get("/statsics/view", asyncMiddleware(auth.viewStatics));
 router.delete("/users/:userId", asyncMiddleware(auth.deleteUser));
 export default router;

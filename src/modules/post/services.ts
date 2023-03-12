@@ -106,4 +106,8 @@ const getAllPosts = async (currUserId: number,params: Pagination) => {
   return await postDao.getAllPosts(currUserId,params);
 };
 
-export default { createPost, getPostsByUserId, getPostById, updatePostById, getAllPosts, deletePost };
+const getCountPosts = async () => {
+  return await postDao.getCountPosts();
+};
+
+export default { getCountPosts,createPost, getPostsByUserId, getPostById, updatePostById, getAllPosts, deletePost };

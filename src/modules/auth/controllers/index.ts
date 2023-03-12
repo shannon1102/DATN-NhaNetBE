@@ -1,5 +1,8 @@
 import authService from "../services/auth";
 import friendService from "../../friend/services";
+import productService from "../../product/services";
+import postService from "../../post/services";
+import depositService from "../../deposit/services";
 import { Request, Response } from "express";
 import { User } from "../../../entities/user";
 import CustomError from "../../../errors/customError";
@@ -143,4 +146,23 @@ const deleteUser = async (req: Request, res: Response) => {
     result: newUser,
   });
 };
-export default { register,getAllUsers, deleteUser, login, me, createUserByDevice, updatePassword, updateInfo , getUserInfo};
+const viewStatics = async (req: Request, res: Response)=>{
+  const numOfUsers = await authService.getCountUsers();
+  const numOfPosts = await postService.getCountPosts();
+  const numOfProducts = await productService.countProducts();
+  const numOfDeposits = await depositService.getCountDeposit();
+
+  return res.status(200).json({
+    status: "success",
+    result: {
+      numOfUsers,
+      numOfPosts,
+      numOfProducts,
+      numOfDeposits
+    },
+  });
+
+
+
+}
+export default { viewStatics, register,getAllUsers, deleteUser, login, me, createUserByDevice, updatePassword, updateInfo , getUserInfo};

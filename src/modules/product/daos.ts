@@ -72,15 +72,9 @@ const getProducts = async (params: ProductSearchParams): Promise<{ products: Pro
   };
 };
 
-const countProducts = async (params: { url?: string; title?: string }): Promise<number> => {
+const countProducts = async (): Promise<number> => {
   const productRepo = getRepository(Product);
   let countQuery = productRepo.createQueryBuilder("p");
-  if (params.url) {
-    countQuery = countQuery.andWhere(`url="${params.url}"`);
-  }
-  if (params.title) {
-    countQuery = countQuery.andWhere(`title="${params.title}"`);
-  }
   const count = await countQuery.getCount();
   return count;
 };

@@ -92,6 +92,12 @@ const getAllUsers = async (user: User) =>{
   return foundUsers;
 
 }
+
+const getCountUsers = async () =>{
+  const foundUsers = await userDao.getCountUser();
+  return foundUsers;
+
+}
 const deleteUser = async (userId: number) =>{
   const deleteUser = await userDao.deleteUser(userId);
 
@@ -99,4 +105,4 @@ const deleteUser = async (userId: number) =>{
 
 }
 
-export default {getAllUsers,deleteUser, register, login, createUserByDeviceId, updateUserInfo, updatePassword, getUserInfo };
+export default {getCountUsers,getAllUsers,deleteUser, register, login, createUserByDeviceId, updateUserInfo, updatePassword, getUserInfo };

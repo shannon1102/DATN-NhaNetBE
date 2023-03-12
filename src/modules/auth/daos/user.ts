@@ -65,6 +65,7 @@ const getAllUsers  = async (userId: number) => {
   return foundUsers;
 }
 
+
 const updateUser = async (id: number, data: User) => {
   const userReposity = getRepository(User);
   await userReposity.update(id, data);
@@ -74,5 +75,10 @@ const deleteUser = async (id: number) => {
   const userReposity = getRepository(User);
   await userReposity.delete(id);
 };
+const getCountUser = async ()=>{
+  const userReposity = getRepository(User);
+  const  foundUsers = await userReposity.count();
+  return foundUsers;
+}
 
-export default { getAllUsers,createUser, findUser, updateUser, deleteUser, getUserInfo };
+export default { getCountUser, getAllUsers,createUser, findUser, updateUser, deleteUser, getUserInfo };

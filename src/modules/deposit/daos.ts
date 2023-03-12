@@ -79,6 +79,16 @@ const getDepositsByUserId = async (params: Pagination, userId: number) => {
     .getManyAndCount();
   return Deposits;
 };
+const getCountDeposit = async ()=>{
+  const depositRepository = getRepository(Deposit);
+  const depositsCount = await depositRepository
+    .createQueryBuilder("d")
+    .leftJoinAndSelect("d.product","p","p.id = d.productId")
+    .orderBy("d.createdAt", "DESC")
+    .getCount();
+  return depositsCount;
+
+}
 export default {
   createDeposit,
   getDepositById,
@@ -86,5 +96,6 @@ export default {
   deleteDepositById,
   getDepositsByPostId,
   getDepositsByUserId,
-  getUserDeposits
+  getUserDeposits,
+  getCountDeposit
 };

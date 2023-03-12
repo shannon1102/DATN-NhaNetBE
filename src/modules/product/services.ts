@@ -177,8 +177,8 @@ const deleteProduct = async (id: number) => {
  * @param params.title title của product
  * @returns total product
  */
-const countProducts = async (params: { url?: string; title?: string }): Promise<number> => {
-  const count: number = await productDaos.countProducts(params);
+const countProducts = async (): Promise<number> => {
+  const count: number = await productDaos.countProducts();
   return count;
 };
 
