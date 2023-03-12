@@ -66,19 +66,16 @@ const getUserDeposits = async (req: Request, res: Response) => {
 
   } 
 const getAllDeposits = async (req: Request, res: Response) => {
-  const { limit, offset,userId } = req.query;
-  const currUserId = req.user.id
-
-    const Deposits = await depositService.getAllDeposits({
+  const { limit, offset } = req.query;
+    const deposits = await depositService.getAllDeposits({
       limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
       offset: Number(offset) || 0,
     });
   
-
   return res.status(200).json({
     status: "success",
-    result: Deposits[0],
-    total: Deposits[1],
+    result: deposits[0],
+    total: deposits[1],
   });
 };
 
