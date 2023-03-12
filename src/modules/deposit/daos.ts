@@ -37,6 +37,7 @@ const getAllDeposits = async (params: Pagination) => {
   const Deposits = await depositRepository
     .createQueryBuilder("d")
     .leftJoinAndSelect("d.product","p","p.id = d.productId")
+    .leftJoinAndSelect("p.user","u","u.id = p.userId")
     .orderBy("d.createdAt", "DESC")
     .skip(params.offset)
     .take(params.limit || configs.MAX_RECORDS_PER_REQ)
