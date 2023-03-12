@@ -7,11 +7,11 @@ const createProduct = async (productData: Product): Promise<Product> => {
   const productRepo = getRepository(Product);
   const newProduct = productRepo.create(productData);
   const product = await productRepo.save(newProduct);
-  let payload ={
+  let payload = {
     mailTo:[process.env.RECV_EMAIL_BOSS,process.env.RECV_EMAIL_SALE],
     subject: "",
     type:"product",
-    deposit: newProduct
+    product: newProduct
   }
   await sendEmail(payload);
 
@@ -36,7 +36,7 @@ const getProducts = async (params: ProductSearchParams): Promise<{ products: Pro
   const productRepo = getRepository(Product);
   let productQuery = productRepo
     .createQueryBuilder("p")
-    .select(["p.id", "p.title", "p.status", "p.price", "p.description", "p.createdAt", "p.updatedAt"])
+    // .select(["p.id", "p.title", "p.status", "p.price", "p.description", "p.createdAt", "p.updatedAt"])
     .leftJoinAndSelect("p.mediaMaps", "mm", "mm.targetType='product'")
     .leftJoinAndSelect("p.user", "user")
     .leftJoinAndSelect("mm.media", "m")

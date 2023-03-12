@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { District } from "../../entities/address/district";
+import { District } from "../../../entities/address/district";
 ;
 
 const districtDaos = {

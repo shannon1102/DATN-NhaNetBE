@@ -10,7 +10,7 @@ const createProduct = async (req: Request, res: Response) => {
     console.log("Eqqqqqqqqqqqqq",req.body);
     let userId = req.user.id 
     const { title, description, status, price, numFloors, numBedRooms, featureImageId,
-        squaredMeterArea, lengthMeter, widthMeter,district,ward,  certificateOfland, houseType, media } = req.body;
+        squaredMeterArea, lengthMeter, widthMeter,district,ward,city, certificateOfland, houseType, media } = req.body;
     if (!featureImageId) {
         throw new CustomError(codes.BAD_REQUEST, "Missing field featureImageId!");
     }
@@ -39,6 +39,7 @@ const createProduct = async (req: Request, res: Response) => {
         widthMeter,
         certificateOfland, 
         houseType,
+        city,
         district,
         ward,
         userId

@@ -1,6 +1,6 @@
 import express from 'express';
 import asyncMiddleware from '../middlewares/async';
-import provinceControllers from '../modules/province/controllers';
+import provinceControllers from '../modules/address/province/controllers';
 
 const router = express.Router();
 

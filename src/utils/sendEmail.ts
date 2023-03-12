@@ -46,13 +46,13 @@ export const sendEmail = async (payload: any) => {
       html: `
       <h2><b>Mới: </b> ${payload?.title || "Noinfo"}</h2>
       <div style="margin-left: 30px;">
-      <h3>Tên:</b> ${payload?.product.title || "Noinfo"} </h3>
+      <h3>Tên:</b> ${payload?.product?.title || "Noinfo"} </h3>
       <p><b>Mô tả:</b> ${payload?.product?.description || "Noinfo"} <p>
       <p><b>Email:</b> ${payload?.product?.customerEmail || "No info"} <p>
       <p><b>Oner Phone</b>: ${payload?.product?.customerPhone || "No info"}<p>
-      <p><b>Message:</b> ${payload?.product.message || "Noinfor"} <p>
+      <p><b>Message:</b> ${payload?.product?.message || "Noinfor"} <p>
       </div>
-      <img src= {${process.env.SERVER_URL}/media/${payload?.product.featureImageId}}></img>
+      <img src= {${process.env.SERVER_URL}/media/${payload?.product?.featureImageId}}></img>
       <div>
       <p> NhaNet - Nhà ấm cơm no <a href="aaaa">Click Here</a></p>
       </div>

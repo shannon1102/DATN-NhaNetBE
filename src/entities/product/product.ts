@@ -38,6 +38,9 @@ export class Product {
   certificateOfland?: number;
 
   @Column({ default: "" })
+  city?: string;
+
+  @Column({ default: "" })
   district?: string;
 
   

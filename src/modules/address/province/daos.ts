@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Province } from '../../entities/address/province';
+import { Province } from '../../../entities/address/province';
 
 
 const proviceDaos = {
