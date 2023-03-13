@@ -20,11 +20,11 @@ export const sendEmail = async (payload: any) => {
       to: payload.mailTo,
       subject: `NhaNet website have new email`, // Subject line
       html: `
-      <h2><b>Deposit Information :</b>}</h2>
+      <h2><b>Deposit Information :</b></h2>
       <div style="margin-left: 30px;">
       <h3>Cutosmer Name:</b> ${payload?.content || "Noinfo"} </h3>
       <p><b>Tên người mua:</b> ${payload?.deposit?.customerName || "Noinfo"} <p>
-      <p><b>Rmail người mua:</b> ${payload?.deposit?.customerEmail || "No info"} <p>
+      <p><b>Email người mua:</b> ${payload?.deposit?.customerEmail || "No info"} <p>
       <p><b>SĐT người mua :</b>: ${payload?.deposit?.customerPhone || "No info"}<p>
       <p><b>Ngày</b>: ${Date.now() || "No info"}<p>
       <p><b>Số tiền</b>: ${payload?.deposit?.price || "No info"}<p>
