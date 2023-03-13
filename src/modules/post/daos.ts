@@ -48,6 +48,7 @@ const getPostsByUserId = async (currUserId:number ,condition: { userId: number; 
   const posts = await postRepository
     .createQueryBuilder("a")
     .leftJoinAndSelect("a.mediaMaps", "mm", `mm.targetType='post'`)
+    .leftJoinAndSelect("a.user", "user")
     .leftJoinAndSelect("mm.media", "m")
     .leftJoinAndSelect("a.likes", "like", "like.postId = a.id")
     .leftJoinAndSelect("a.comments", "cmt", "cmt.isDeleted = false and cmt.postId = a.id")

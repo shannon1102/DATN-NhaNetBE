@@ -32,7 +32,7 @@ const createPost = async (post: PostCreateParamsType) => {
   return postRes;
 };
 
-const getPostsByUserId = async (currUserId:number ,userId: number, pagination: Pagination) => {
+const getPostsByUserId = async ( currUserId:number,userId: number, pagination: Pagination) => {
   const result = await postDao.getPostsByUserId(currUserId,{ userId, ...pagination });
   return result;
 };

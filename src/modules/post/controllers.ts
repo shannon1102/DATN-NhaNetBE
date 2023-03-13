@@ -93,13 +93,13 @@ const getAllPosts = async (req: Request, res: Response) => {
   const currUserId = req.user.id;
   let data;
   if(userId) {
-    data = await postService.getPostsByUserId(+userId,+currUserId,{
+    data = await postService.getPostsByUserId(+currUserId,+userId,{
       limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
       offset: Number(offset) || 0,
     });
 
   } else{
-     data = await postService.getAllPosts(currUserId,{
+     data = await postService.getAllPosts(+currUserId,{
       limit: Number(limit) || configs.MAX_RECORDS_PER_REQ,
       offset: Number(offset) || 0,
     });
