@@ -19,6 +19,10 @@ export class Deposit {
   @Column()
   customerAddress: string;
   @Column()
+  ownerName: string;
+  @Column()
+  ownerEmail: string;
+  @Column()
   paymentMethod: string;
   @Column()
   status: string;

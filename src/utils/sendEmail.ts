@@ -20,22 +20,21 @@ export const sendEmail = async (payload: any) => {
       to: payload.mailTo,
       subject: `NhaNet website have new email`, // Subject line
       html: `
-      <h2><b>Inquiry Information</b> ${payload?.title || "Noinfo"}</h2>
+      <h2><b>Deposit Information :</b>}</h2>
       <div style="margin-left: 30px;">
       <h3>Cutosmer Name:</b> ${payload?.content || "Noinfo"} </h3>
       <p><b>Tên người mua:</b> ${payload?.deposit?.customerName || "Noinfo"} <p>
       <p><b>Rmail người mua:</b> ${payload?.deposit?.customerEmail || "No info"} <p>
       <p><b>SĐT người mua :</b>: ${payload?.deposit?.customerPhone || "No info"}<p>
-      <p><b>Ngày</b>: ${payload?.deposit?.customerPhone || "No info"}<p>
+      <p><b>Ngày</b>: ${Date.now() || "No info"}<p>
       <p><b>Số tiền</b>: ${payload?.deposit?.price || "No info"}<p>
       </div>
       <div>
-      <p> NhaNet - Nhà ấm cơm no <a href="aaaa">Click Here</a></p>
+      <p> NhaNet - Nhà ấm cơm no <a href="http://localhost:3000">Click Here</a></p>
       </div>
       `, // html body
 
     });
-    console.log("Messss", info);
   }
   if (payload.type == "product") {
     let info = await transporter.sendMail({
@@ -44,7 +43,7 @@ export const sendEmail = async (payload: any) => {
       to:  payload.mailTo,
       subject: `NhaNet website have new email`, // Subject line
       html: `
-      <h2><b>Mới: </b> ${payload?.title || "Noinfo"}</h2>
+      <h2><b>Product mới: </b></h2>
       <div style="margin-left: 30px;">
       <h3>Tên:</b> ${payload?.product?.title || "Noinfo"} </h3>
       <p><b>Mô tả:</b> ${payload?.product?.description || "Noinfo"} <p>
