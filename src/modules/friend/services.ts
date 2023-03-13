@@ -61,6 +61,13 @@ const getAllFriends = async (params: Pagination, userId: number) => {
   const formatResponse = await handleFriendResponse(resp[0], userId);
   return [formatResponse, resp[1]];
 };
+const getAllFriendMails = async (params: Pagination, userId: number) => {
+  let resp = await friendDao.getAllFriends(params, userId);
+  const formatResponse = await handleFriendResponse(resp[0], userId);
+  let mails = formatResponse?.map(e=>e?.email);
+  return mails;
+};
+
 
 
 const getAllSuggestFriends = async (params: Pagination, userId: number) => {
@@ -83,4 +90,4 @@ const handleFriendResponse = async (friendShipList: Friend[], currentUserId: num
   return usersWithSameFriend;
 }
 
-export default { updateFriendStatus, getAllRequestFriends, getAllSuggestFriends, declineRequestFriend, createFriend, addFriend, acceptFriend, getFriendById, getAllFriends, deleteFriendById };
+export default { getAllFriendMails,updateFriendStatus, getAllRequestFriends, getAllSuggestFriends, declineRequestFriend, createFriend, addFriend, acceptFriend, getFriendById, getAllFriends, deleteFriendById };

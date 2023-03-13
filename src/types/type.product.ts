@@ -37,4 +37,5 @@ export type ProductSearchParams = {
   pagination?: Pagination;
   createdAt?: "DESC" | "ASC";
   bestSelling?: boolean;
+  userId?: number;
 };

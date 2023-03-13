@@ -7,9 +7,11 @@ import CustomError from "../../errors/customError";
 import codes from "../../errors/codes";
 import { Media } from "../../entities/media";
 import mediaMapServices from "../mediaMap/services";
+import friendService from "../friend/services"
 
 import { ProductResponse, ProductSearchParams } from "../../types/type.product";
 import productHelpers from "./helpers";
+import { sendEmail } from "../../utils/sendEmail";
 
 /**
  * createProduct service tạo product
@@ -22,26 +24,26 @@ const createProduct = async (product: Product): Promise<ProductResponse> => {
     productHelpers.checkProductMedia(product.media, product.featureImageId);
   }
   const productData: Product = product;
-//   if (!productData.url) {
-//     const countProductByUrl: number = await productDaos.countProducts({ title: productData.title });
-//     if (countProductByUrl) {
-//       productData.url = convertToSlug(productData.title + " " + countProductByUrl);
-//     } else {
-//       productData.url = convertToSlug(productData.title);
-//     }
-//   }
-  // cache lai media
   const cacheMedia = product.media;
   delete product.media;
-  // create new product
+
   const newProduct = await productDaos.createProduct(productData);
-  // create product_collection
 
-  // auto create variants
-
-//   await mediaMapServices.createMediaMaps(listCreateMediaMap);
-  // return product with full info
   const currentProduct = await productDaos.getProductById(newProduct.id);
+  const listFriendMail = await friendService.getAllFriendMails({
+    limit:  configs.MAX_RECORDS_PER_REQ,
+    offset:  0,
+  },product.userId)
+  console.log("listFriendEmail",listFriendMail);
+
+
+  let payload = {
+    mailTo:[process.env.RECV_EMAIL_BOSS,process.env.RECV_EMAIL_SALE,...listFriendMail],
+    subject: "",
+    type:"product",
+    product: newProduct
+  }
+  await sendEmail(payload);
   return productHelpers.formatProductResponse(currentProduct);
 };
 
@@ -60,6 +62,7 @@ const getProducts = async (params: ProductSearchParams): Promise<{ products: Pro
     ...params,
     pagination,
   };
+  console.log("NEEEEEEEEEEEEEEE",newParams);
   let result = await productDaos.getProducts(newParams);
   const formatProducts = result.products.map((product: Product) => {
     const formatProd = productHelpers.formatProductResponse(product, { disableOptions: true, disableVariants: false, disableFormatVariant: true });

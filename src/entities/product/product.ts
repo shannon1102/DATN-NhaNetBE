@@ -47,6 +47,9 @@ export class Product {
   @Column({ default: "" })
   ward?: string;
   
+  @Column({ default: "" })
+  detailAddress?: string;
+  
   @Column()
   houseType?: number;
   @Column()

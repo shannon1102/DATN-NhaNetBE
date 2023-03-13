@@ -62,10 +62,9 @@ const getProductById = async (req: Request, res: Response) => {
 };
 
 const getProducts = async (req: Request, res: Response) => {
-    const { limit, offset, title, status, vendorId, collectionId, minPrice, maxPrice, sortPrice, createdAt, bestSelling } = req.query;
-    if (sortPrice && sortPrice !== "DESC" && sortPrice !== "ASC") {
-        throw new CustomError(codes.BAD_REQUEST, "sortPrice should be DESC or ASC");
-    }
+    const { limit, offset, title, status, minPrice, maxPrice, createdAt, userId } = req.query;
+    
+    console.log("queryy",req.query);
     if (createdAt && createdAt !== "DESC" && createdAt !== "ASC") {
         throw new CustomError(codes.BAD_REQUEST, "createdAt should be DESC or ASC");
     }
@@ -75,8 +74,8 @@ const getProducts = async (req: Request, res: Response) => {
         status: status as string,
         minPrice: Number(minPrice),
         maxPrice: Number(maxPrice),
-        sortPrice: sortPrice as "DESC" | "ASC",
         createdAt: createdAt as "DESC" | "ASC",
+        userId: Number(userId),
     };
     const data = await productServices.getProducts(params);
     res.status(200).json({
