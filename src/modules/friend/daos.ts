@@ -117,6 +117,7 @@ const getAllSuggestFriends = async (params: Pagination, userId: number) => {
       if (a?.addressee?.id != userId && !userFriendIds.includes(a.addressee.id))
         arr.push(a.addressee)
     })
+    arr = arr.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i)
     console.log("Arrr", arr);
 
   } else {
